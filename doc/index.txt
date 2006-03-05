@@ -1,0 +1,80 @@
+=============================================================
+paircomp: A Toolkit for Ungapped Comparisons of Two Sequences
+=============================================================
+
+:Author: Titus Brown
+:Date: March 13th, 2005
+:Version: 1.0
+
+**paircomp** is a toolkit for doing ungapped comparisons of two
+DNA sequences.  It contains a C++ library, several standalone command-line
+programs, and a Python interface to the C++ library.
+
+You can download paircomp 1.0 here: `paircomp-1.0.tar.gz`_.
+
+.. _paircomp-1.0.tar.gz: ./paircomp-1.0.tar.gz
+
+C++ Library
+-----------
+
+The C++ library is located under ``lib/``.  It contains routines for
+creating and manipulating fixed-width window comparisons of two
+sequences, as well as functions for saving them to, and loading them
+from, files.
+
+Command Line Programs
+---------------------
+
+The command line programs are all written in C++ and located under
+``bin/``.  Run the programs without arguments to see Command line parameters.
+The three binary programs are:
+
+**paircomp**
+
+	**paircomp** does an O(N*M) comparison of two sequences, and saves
+	the result in a simple format consisting of tab-delimited columns
+	of four numbers: top position, bottom position, match length, and
+	orientation (1/-1) of the bottom match with respect to the bottom
+	sequence.
+
+**seqcomp**
+
+	**seqcomp** does the same comparison as **paircomp** but produces
+	an output format compatible with that of the original **seqcomp**.
+	*This program is present for backwards compatibility and should not
+	be used.*
+
+**find_patch**
+
+	**find_patch** does an O(N+M) comparison of two sequences.  It will
+	slow down exponentially as window sizes increase and thresholds drop;
+	it's designed for 10bp comparisons with a threshold of
+	90%.
+
+Python Library
+--------------
+
+The python library package is called ``paircomp`` and is kept under ``python/``.
+To install it, first run 'make' in the top level directory; then, go into
+``python/`` and type ``python setup.py install``.
+
+See the `Python API documentation`_ for more information.
+
+Known Problems
+--------------
+
+Elliot Bush pointed out that the current implementation of three-way
+filtering varies wildly in speed depending on the sequences compared.
+Filtering comparisons of sequences containing many low-complexity
+sequence repeats will be especially slow.
+
+Acknowledgements
+----------------
+
+Tristan De Buysscher wrote the initial C version of seqcomp, and
+helped develop the format.  The find_patch/O(N+M) algorithm was
+written by Shoudan Liang of the NASA Ames Research Center. Daniel Fu,
+Alok Saldanha, and Eliot Bush have contributed bug reports &
+documentation suggestions.
+
+.. _Python API documentation: python-api.html 

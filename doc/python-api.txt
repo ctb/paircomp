@@ -1,0 +1,208 @@
+=======================
+Python API for paircomp
+=======================
+
+:Author: Titus Brown
+:Date: March 13th, 2005
+:Version: 1.0
+
+See the `main documentation`_ for more information on paircomp.
+
+The Python API for paircomp is a simple object-oriented interface.
+There are only two classes, the ``Comparison`` class and the ``Match`` class.
+Only the ``Comparison`` class has any methods; the ``Match`` class is strictly
+a container for a pairwise match.
+
+The file ``tests/test-python-interface.py`` contains all of these commands
+in their native glory, if you'd like to see them actually running.
+
+**Note:** All of the time-consuming functions respect threading, so you
+can run the functions in parallel on multiprocessor machines.
+
+Creating ``Comparison`` objects
+-------------------------------
+
+There are two ways to create ``Comparison`` objects: load them from a file,
+or create them by running a comparison.
+
+Loading them from a file is simple:
+
+ ``cmp = paircomp.parse_paircomp(buf, top_seq_len, bot_seq_len, windowsize)``
+
+       Load a paircomp comparison from the string ``buf`` into a ``Comparison``
+       object; ``top_seq_len`` and ``bot_seq_len`` are the lengths of the
+       two sequences compared, and ``windowsize`` is the size of the window
+       used.
+
+       This file format is created by the ``paircomp`` and ``find_patch``
+       command-line programs.
+
+ ``cmp = paircomp.parse_seqcomp(buf, top_seq_len, bot_seq_len, windowsize)``
+
+       Same as ``parse_paircomp``, but use the now-obsolete ``b3.5`` format
+       created by the ``seqcomp`` command-line program.
+
+Alternatively, you can run a comparison like so:
+
+ ``cmp = paircomp.do_simple_nxn_compare(top_seq, bot_seq, windowsize, threshold)``
+
+       This does a simple O(NxMxW) comparison.  It's used for
+       testing purposes, because the code can be verified by eye.
+
+ ``cmp = paircomp.do_rolling_nxn_compare(top_seq, bot_seq, windowsize, threshold)``
+
+       This does an O(NxM) comparison.  This is good for windowsizes > 10.
+
+ ``cmp = paircomp.do_hashed_nxn_compare(top_seq, bot_seq, windowsize, threshold)``
+
+       This does an O(N+M) comparison, good for windowsizes <= 10.  Its
+       memory use rises exponentially with windowsize, so don't use it
+       for windowsizes much over 12.
+
+All three of these comparison algorithms will return the same answers
+when run with the same parameters.
+
+Manipulating ``Comparison`` objects
+-----------------------------------
+
+Each ``Comparison`` object has three attributes: ``top_len``,
+``bot_len``, and ``windowsize``.
+
+Each ``Comparison`` object also has a bunch of methods.  They are:
+
+  ``save`` and ``save_as_seqcomp`` -- see **Saving Comparison Objects**,
+  below.
+
+  **Coordinate changes:** ``reverse_top`` and ``reverse_bottom``
+
+        Reverse the coordinates of the top or bottom matches, as if
+	the respective sequence had been reverse-complemented.
+
+	Usage:
+
+	   ``new_cmp = cmp.reverse_top()``
+
+	   ``new_cmp = cmp.reverse_bottom()``
+
+  **Swapping top and bottom:** ``invert``
+
+	Invert the top and bottom of the matches, converting a
+	comparison from an A x B comparison to a B x A comparison.
+
+	Usage:
+
+	   ``new_cmp = cmp.invert()``
+
+  **Filtering matches:** ``filter``
+
+	Filter the matches at the given threshold, so that 
+	e.g. only matches >= 80% remain.
+
+	Usage:
+
+	   ``new_cmp = cmp.filter(0.8)``
+
+  **Set operations:** ``contains``, ``equals``, ``is_empty``, ``subtract``, ``intersect``
+
+	Usage:
+
+	    ``if a_cmp.contains(b_cmp): print 'a contains b'``
+
+	    ``if a_cmp.equals(b_cmp): print 'a equals b'``
+
+	    ``if cmp.is_empty(): print `cmp is empty'``
+
+	    ``new_cmp = a_cmp.subtract(b_cmp)``
+
+	    ``new_cmp = a_cmp.intersect(b_cmp)``
+
+	Of course, ``a_cmp == b_cmp`` is the same as ``a_cmp.equals(b_cmp)``,
+	and ``a_cmp - b_cmp`` is the same as ``a_cmp.subtract(b_cmp)``; both
+	notations are present for clarity.
+
+	**Note:** ``a.subtract(b)`` removes all elements from ``a`` that are
+	in ``b``; if an element is in ``b`` but not ``a``, nothing is done.
+	That is, ``a.subtract(b)`` is equivalent to ``a.subtract(b.intersect(a))``.
+
+  **Accessing matches:** ``get_matches``/``[]`` and ``isolate_matching_bases``
+
+     ``get_matches`` accesses the matches for a particular position (on the
+     top sequence).
+
+        Usage:
+
+	    ``matches = cmp.get_matches(pos)``
+
+	or
+
+	    ``matches = cmp[pos]``
+
+	where ``matches`` is a tuple of ``Match`` objects; see below.
+
+     ``isolate_matching_bases`` converts a windowed comparison into its
+     constituent 1-bp matches, as in the closeup feature of FamilyRelations.
+     
+     **Note:** Practically speaking this is the only way to compare comparisons
+     done with different windowsizes: first convert them to 1bp matches, and
+     *then* compare.
+
+Saving ``Comparison`` objects
+-----------------------------
+
+``save`` and ``save_as_seqcomp`` will save ``Comparison`` objects
+in either paircomp or seqcomp formats.
+
+Usage:
+
+    ``cmp.save(filename)``
+
+    ``cmp.save_as_seqcomp(filename)``
+
+``Match`` objects
+-----------------
+
+``Match`` objects are returned from the ``get_matches`` method.
+They possess only a few attributes & that's it:
+
+::
+
+    for match in match_list:
+       print 'top position ', match.top
+       print 'bot position ', match.bot
+       print 'length       ', match.length
+       print 'matches      ', match.matches
+       print 'orient (+/-1)', match.orientation
+
+Three-way Transitivity
+----------------------
+
+One additional function of note is ``filter_transitively``, which
+filters paths between sequences A, B, and C such that only paths
+connecting the same points from A to B, B to C, and A to C remain.
+
+The function call is
+
+::
+
+	new_ab, new_bc, new_ac = paircomp.filter_transitively(ab, bc, ac)
+
+and it takes three pairwise comparisons, A-->B, B-->C, and A-->C,
+all done with the same windowsize (threshold may vary).  The
+function returns three new comparisons, filtered transitively.  For
+a graphical demonstration of this feature, see the FamilyRelationsII_
+program.
+
+**Note:** this function may be very slow for sequences containing many
+repeats.
+
+Another function, ``build_transitive``, builds the ``new_ac`` comparison
+(above) from A-->B and B-->C comparisons.  It's primarily there to test
+``filter_transitively``, but if you want to use it you can call it like
+so:
+
+::
+
+	new_ac = paircomp.build_transitive(ab, bc, seq_a, seq_c, threshold)
+
+.. _main documentation: index.html
+.. _FamilyRelationsII: http://family.caltech.edu/
