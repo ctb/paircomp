@@ -2,31 +2,30 @@
 
 ImmutableComparison.o: ImmutableComparison.hh Comparison.hh
 ImmutableComparison.o: MutableComparison.hh Match.hh /usr/include/assert.h
-ImmutableComparison.o: /usr/include/features.h /usr/include/sys/cdefs.h
-ImmutableComparison.o: /usr/include/gnu/stubs.h algorithms.hh
-MutableComparison.o: /usr/include/stdio.h /usr/include/features.h
-MutableComparison.o: /usr/include/sys/cdefs.h /usr/include/gnu/stubs.h
-MutableComparison.o: /usr/lib/gcc-lib/i386-redhat-linux/3.2.2/include/stddef.h
-MutableComparison.o: /usr/include/bits/types.h /usr/include/bits/wordsize.h
-MutableComparison.o: /usr/include/bits/typesizes.h /usr/include/libio.h
-MutableComparison.o: /usr/include/_G_config.h /usr/include/wchar.h
-MutableComparison.o: /usr/include/bits/wchar.h /usr/include/gconv.h
-MutableComparison.o: /usr/lib/gcc-lib/i386-redhat-linux/3.2.2/include/stdarg.h
-MutableComparison.o: /usr/include/bits/stdio_lim.h
-MutableComparison.o: /usr/include/bits/sys_errlist.h /usr/include/stdlib.h
-MutableComparison.o: /usr/include/ctype.h /usr/include/endian.h
-MutableComparison.o: /usr/include/bits/endian.h /usr/include/string.h
+ImmutableComparison.o: /usr/include/sys/cdefs.h algorithms.hh
+MutableComparison.o: /usr/include/stdio.h /usr/include/_types.h
+MutableComparison.o: /usr/include/sys/_types.h /usr/include/sys/cdefs.h
+MutableComparison.o: /usr/include/machine/_types.h /usr/include/ppc/_types.h
+MutableComparison.o: /usr/include/stdlib.h /usr/include/sys/wait.h
+MutableComparison.o: /usr/include/sys/signal.h
+MutableComparison.o: /usr/include/sys/appleapiopts.h
+MutableComparison.o: /usr/include/machine/signal.h /usr/include/ppc/signal.h
+MutableComparison.o: /usr/include/sys/resource.h
+MutableComparison.o: /usr/include/machine/endian.h /usr/include/ppc/endian.h
+MutableComparison.o: /usr/include/sys/_endian.h /usr/include/stdint.h
+MutableComparison.o: /usr/include/libkern/OSByteOrder.h
+MutableComparison.o: /usr/include/libkern/ppc/OSByteOrder.h
+MutableComparison.o: /usr/include/alloca.h /usr/include/machine/types.h
+MutableComparison.o: /usr/include/ppc/types.h /usr/include/ctype.h
+MutableComparison.o: /usr/include/runetype.h /usr/include/string.h
 MutableComparison.o: MutableComparison.hh Match.hh /usr/include/assert.h
 MutableComparison.o: Comparison.hh
-algorithms.o: /usr/include/ctype.h /usr/include/features.h
-algorithms.o: /usr/include/sys/cdefs.h /usr/include/gnu/stubs.h
-algorithms.o: /usr/include/bits/types.h /usr/include/bits/wordsize.h
-algorithms.o: /usr/lib/gcc-lib/i386-redhat-linux/3.2.2/include/stddef.h
-algorithms.o: /usr/include/bits/typesizes.h /usr/include/endian.h
-algorithms.o: /usr/include/bits/endian.h algorithms.hh MutableComparison.hh
+algorithms.o: /usr/include/ctype.h /usr/include/runetype.h
+algorithms.o: /usr/include/sys/cdefs.h /usr/include/_types.h
+algorithms.o: /usr/include/sys/_types.h /usr/include/machine/_types.h
+algorithms.o: /usr/include/ppc/_types.h algorithms.hh MutableComparison.hh
 algorithms.o: Match.hh /usr/include/assert.h Comparison.hh
 algorithms.o: ImmutableComparison.hh
 algorithms2.o: algorithms2.hh algorithms.hh MutableComparison.hh Match.hh
-algorithms2.o: /usr/include/assert.h /usr/include/features.h
-algorithms2.o: /usr/include/sys/cdefs.h /usr/include/gnu/stubs.h
-algorithms2.o: Comparison.hh ImmutableComparison.hh
+algorithms2.o: /usr/include/assert.h /usr/include/sys/cdefs.h Comparison.hh
+algorithms2.o: ImmutableComparison.hh

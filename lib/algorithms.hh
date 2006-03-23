@@ -49,9 +49,9 @@ namespace paircomp {
 			unsigned int bot_offset,
 			const char * bot_seq_rev);
 
-  unsigned int paircomp::_n_matching(const char * a, unsigned int a_start,
-				     const char * b, unsigned int b_start,
-				     unsigned int w);
+  unsigned int _n_matching(const char * a, unsigned int a_start,
+			   const char * b, unsigned int b_start,
+			   unsigned int w);
 
   void _check_parameters(std::string top, std::string top,
 			 unsigned int, float);
