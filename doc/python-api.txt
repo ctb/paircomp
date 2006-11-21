@@ -102,6 +102,14 @@ Each ``Comparison`` object also has a bunch of methods.  They are:
 
 	   ``new_cmp = cmp.filter(0.8)``
 
+  **Selecting matches by orientation:** ``filter_orientation``
+
+	Select matches that are forward and/or reverse.
+
+	Usage:
+
+	   ``new_cmp = cmp.filter_orientation(select_forward, select_reverse)``
+
   **Set operations:** ``contains``, ``equals``, ``is_empty``, ``subtract``, ``intersect``
 
 	Usage:

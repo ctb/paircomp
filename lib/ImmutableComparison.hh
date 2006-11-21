@@ -72,6 +72,10 @@ namespace paircomp {
     // Filter the comparison at a given threshold.
     ImmutableComparison * filter_by_threshold(float threshold) const;
 
+    // Filter the comparison for a particular orientation.
+    ImmutableComparison * filter_by_orientation(bool forward, bool reverse)
+      const;
+
     // Reverse top or bottom coordinates.
     ImmutableComparison * reverse_top_matches() const;
     ImmutableComparison * reverse_bot_matches() const;

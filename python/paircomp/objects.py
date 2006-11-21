@@ -19,6 +19,7 @@ class Comparison:
       * reverse_top()
       * reverse_bottom()
       * filter(float_threshold)
+      * filter_orientation(forward_only, reverse_only)
       * contains(other_cmp)
       * equals(other_cmp), a.k.a '==' operator
       * subtract(other_cmp), a.k.a. '-' operator
@@ -60,6 +61,10 @@ class Comparison:
 
     def filter(self, threshold):
         f = _paircomp_parser.filter_matches(self._comparisonObj, threshold)
+        return Comparison(f)
+    
+    def filter_orientation(self, fwd, rev):
+        f = _paircomp_parser.filter_orientation(self._comparisonObj, fwd, rev)
         return Comparison(f)
 
     def isolate_matching_bases(self, top_seq, bot_seq):

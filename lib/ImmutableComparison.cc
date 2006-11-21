@@ -195,6 +195,34 @@ ImmutableComparison * ImmutableComparison::filter_by_threshold(float threshold)
   return new_cmp;
 }
 
+ImmutableComparison * ImmutableComparison::filter_by_orientation(bool forward,
+								 bool reverse)
+  const
+{
+  MutableComparison new_cmp(_top_length, _bottom_length, _windowsize);
+  matches_iterator iter;
+
+  // Loop through & transfer all matches above threshold into a new
+  // container.
+
+  for (iter = _matches.begin(); iter != _matches.end(); iter++) {
+    _MatchContainer * cont = iter->second;
+
+    for (unsigned int i = 0; i < cont->num; i++) {
+      Match * m = &cont->block[i];
+      if (m->get_orientation() == 1 && forward) {
+	Match * new_m = m->copy();
+	new_cmp.add_match(new_m);
+      } else if (m->get_orientation() == -1 && reverse) {
+	Match * new_m = m->copy();
+	new_cmp.add_match(new_m);
+      }
+    }
+  }
+
+  return new ImmutableComparison(&new_cmp);
+}
+
 ImmutableComparison * ImmutableComparison::reverse_top_matches() const
 {
   MutableComparison new_cmp(_top_length, _bottom_length, _windowsize);

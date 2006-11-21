@@ -293,6 +293,26 @@ static PyObject * filter_matches(PyObject * self, PyObject * args)
   return PyCObject_FromVoidPtr(f, cleanup_ImmComparison);
 }
 
+// filter the matches by orientation
+
+static PyObject * filter_orientation(PyObject * self, PyObject * args)
+{
+  PyObject * p;
+  int forward_filter, reverse_filter;
+
+  if (!PyArg_ParseTuple(args, "Oii", &p, &forward_filter, &reverse_filter)) {
+    return NULL;
+  }
+
+  bool fwd = (forward_filter != 0);
+  bool rev = (reverse_filter != 0);
+
+  ImmutableComparison * c = (ImmutableComparison *) PyCObject_AsVoidPtr(p);
+  ImmutableComparison * f = c->filter_by_orientation(fwd, rev);
+
+  return PyCObject_FromVoidPtr(f, cleanup_ImmComparison);
+}
+
 // invert the matches.
 
 static PyObject * invert(PyObject * self, PyObject * args)
@@ -548,6 +568,7 @@ static PyMethodDef SeqcompParserMethods[] = {
   { "reverse_bot", reverse_bottom, METH_VARARGS },
   { "invert", invert, METH_VARARGS },
   { "filter_matches", filter_matches, METH_VARARGS },
+  { "filter_orientation", filter_orientation, METH_VARARGS },
   { "build_transitive", build_transitive, METH_VARARGS },
   { "filter_transitively", filter_transitively, METH_VARARGS },
   { "isolate_matching_bases", isolate_matching_bases, METH_VARARGS },

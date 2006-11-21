@@ -137,6 +137,35 @@ assert simple_cmp == simple_cmp_i.invert()
 
 print 'success'
 
+print 'Testing filter by orientation...',
+
+# should be equal
+a = simple_cmp.filter_orientation(True, True)
+assert a == simple_cmp
+
+# should not be equal!
+a = simple_cmp.filter_orientation(True, False)
+assert a != simple_cmp
+
+b = simple_cmp.filter_orientation(False, True)
+assert a != simple_cmp
+
+# should be equal
+a = simple_cmp.filter_orientation(True, False)
+b = simple_cmp.reverse_bottom().filter_orientation(False, True)
+b = b.reverse_bottom()
+
+assert a == b
+
+# should be equal
+a = simple_cmp.filter_orientation(True, False)
+b = simple_cmp.reverse_top().filter_orientation(False, True)
+b = b.reverse_top()
+
+assert a == b
+
+print 'success'
+
 print 'Testing filter by threshold...',
 
 # filter gradually...
