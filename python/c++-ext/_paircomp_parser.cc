@@ -605,14 +605,23 @@ static PyObject * get_nway_filtered_paths(PyObject * self, PyObject * args)
 
   NwayComparison * nway = (NwayComparison *) PyCObject_AsVoidPtr(p);
 
-  std::string ret;
   std::vector<NwayPath> paths = nway->filter();
+
+  PyObject * t = PyTuple_New(paths.size());
   for (unsigned int i = 0; i < paths.size(); i++) {
-    NwayPath path = paths[i];
-    ret += print_poso_v(path);
+    NwayPath p = paths[i];
+
+    PyObject * t2 = PyTuple_New(p.size());
+
+    for (unsigned int j = 0; j < p.size(); j++) {
+      PosAndO po = p[j];
+      PyObject * item = Py_BuildValue("(ii)", po.pos, po.orient);
+      PyTuple_SET_ITEM(t2, j, item);
+    }
+    PyTuple_SET_ITEM(t, i, t2);
   }
   
-  return PyString_FromString(ret.c_str());
+  return t;
 }
 
 //
