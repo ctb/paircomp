@@ -10,6 +10,7 @@
 #include "Comparison.hh"
 #include "MutableComparison.hh"
 #include "ImmutableComparison.hh"
+#include "NwayComparison.hh"
 
 #include "algorithms.hh"
 #include "algorithms2.hh"

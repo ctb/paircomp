@@ -551,6 +551,70 @@ static PyObject * subtract(PyObject * self, PyObject * args)
   return ret;
 }
 
+static PyObject * create_nway(PyObject * self, PyObject * args)
+{
+  unsigned int windowsize;
+  float threshold;
+
+  if (!PyArg_ParseTuple(args, "If", &windowsize, &threshold)) {
+    return NULL;
+  }
+
+  NwayComparison * nway = new NwayComparison(windowsize, threshold);
+
+  return PyCObject_FromVoidPtr(nway, NULL); // @CTB
+}
+
+static PyObject * add_sequence_to_nway(PyObject * self, PyObject * args)
+{
+  char * seq;
+  PyObject * p;
+
+  if (!PyArg_ParseTuple(args, "Os", &p, &seq)) {
+    return NULL;
+  }
+
+  NwayComparison * nway = (NwayComparison *) PyCObject_AsVoidPtr(p);
+  nway->add_sequence(seq);
+
+  Py_INCREF(Py_None);
+  return Py_None;
+}
+
+std::string print_poso_v(NwayPath v)
+{
+  char buf[50];
+  std::string ret;
+  for (unsigned int i = 0; i < v.size(); i++) {
+    PosAndO p = v[i];
+    sprintf(buf, "%d(%c) ", p.pos, p.orient > 0 ? '+' : '-');
+    ret += buf;
+  }
+  ret += "\n";
+
+  return ret;
+}
+
+static PyObject * get_nway_filtered_paths(PyObject * self, PyObject * args)
+{
+  PyObject * p;
+
+  if (!PyArg_ParseTuple(args, "O", &p)) {
+    return NULL;
+  }
+
+  NwayComparison * nway = (NwayComparison *) PyCObject_AsVoidPtr(p);
+
+  std::string ret;
+  std::vector<NwayPath> paths = nway->filter();
+  for (unsigned int i = 0; i < paths.size(); i++) {
+    NwayPath path = paths[i];
+    ret += print_poso_v(path);
+  }
+  
+  return PyString_FromString(ret.c_str());
+}
+
 //
 // Module machinery.
 //
@@ -576,6 +640,9 @@ static PyMethodDef SeqcompParserMethods[] = {
   { "contains", contains, METH_VARARGS },
   { "is_empty", is_empty, METH_VARARGS },
   { "subtract", subtract, METH_VARARGS },
+  { "create_nway", create_nway, METH_VARARGS },
+  { "add_sequence_to_nway", add_sequence_to_nway, METH_VARARGS },
+  { "get_nway_filtered_paths", get_nway_filtered_paths, METH_VARARGS },
   { NULL, NULL }
 };
 

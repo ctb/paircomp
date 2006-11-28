@@ -96,6 +96,8 @@ bool NwayComparison::check_match(unsigned int from, unsigned int to,
 
 std::vector<NwayPath> NwayComparison::filter()
 {
+  do_comparisons();
+
   std::string seq0 = _sequences[0];
   std::vector<NwayPath> ret_paths;
 

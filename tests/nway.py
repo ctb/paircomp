@@ -321,3 +321,11 @@ def test():
 
 if __name__ == '__main__':
     test()
+
+    from paircomp import _paircomp_parser
+    o = _paircomp_parser.create_nway(10, 0.7)
+    _paircomp_parser.add_sequence_to_nway(o, 'AAAAAAAAAA')
+    _paircomp_parser.add_sequence_to_nway(o, 'AAAAAAAAAA')
+    _paircomp_parser.add_sequence_to_nway(o, 'AAAAAAAAAA')
+    _paircomp_parser.add_sequence_to_nway(o, 'TTTTTTTTTT')
+    print _paircomp_parser.get_nway_filtered_paths(o)
