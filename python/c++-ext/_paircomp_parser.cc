@@ -28,12 +28,22 @@ extern "C" {
 static PyObject * PaircompParserError;
 
 //
-// cleanup functions for ImmutableComparison objects.
+// cleanup function for ImmutableComparison objects.
 //
 
 static void cleanup_ImmComparison(void * p)
 {
   ImmutableComparison * c = (ImmutableComparison *) p;
+  delete c;
+}
+
+//
+// cleanup function for NwayComparison objects.
+//
+
+static void cleanup_NwayComparison(void * p)
+{
+  NwayComparison * c = (NwayComparison *) p;
   delete c;
 }
 
@@ -562,7 +572,7 @@ static PyObject * create_nway(PyObject * self, PyObject * args)
 
   NwayComparison * nway = new NwayComparison(windowsize, threshold);
 
-  return PyCObject_FromVoidPtr(nway, NULL); // @CTB
+  return PyCObject_FromVoidPtr(nway, cleanup_NwayComparison); // @CTB
 }
 
 static PyObject * add_sequence_to_nway(PyObject * self, PyObject * args)

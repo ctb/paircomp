@@ -38,7 +38,6 @@ namespace paircomp {
 
   class NwayComparison {
   protected:
-
     std::vector<std::string> _sequences;
     std::map<MapIndexPair, ImmutableComparison *> _comparisons;
   public:
