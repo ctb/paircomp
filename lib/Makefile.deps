@@ -22,6 +22,10 @@ MutableComparison.o: /usr/include/bits/sched.h /usr/include/alloca.h
 MutableComparison.o: /usr/include/ctype.h /usr/include/string.h
 MutableComparison.o: MutableComparison.hh Match.hh /usr/include/assert.h
 MutableComparison.o: Comparison.hh
+NwayComparison.o: NwayComparison.hh ImmutableComparison.hh Comparison.hh
+NwayComparison.o: MutableComparison.hh Match.hh /usr/include/assert.h
+NwayComparison.o: /usr/include/features.h /usr/include/sys/cdefs.h
+NwayComparison.o: /usr/include/gnu/stubs.h
 algorithms.o: /usr/include/ctype.h /usr/include/features.h
 algorithms.o: /usr/include/sys/cdefs.h /usr/include/gnu/stubs.h
 algorithms.o: /usr/include/bits/types.h /usr/include/bits/wordsize.h

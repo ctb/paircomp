@@ -11,7 +11,7 @@ clean:
 ####### individual binary targets
 
 COMMON_OBJS=MutableComparison.o ImmutableComparison.o \
-	algorithms.o algorithms2.o
+	algorithms.o algorithms2.o NwayComparison.o
 
 libpaircomp.a: $(COMMON_OBJS)
 	ar rcv libpaircomp.a $(COMMON_OBJS)

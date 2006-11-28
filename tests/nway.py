@@ -148,6 +148,9 @@ class NwayComparison:
         for i in range(from_seq, to_seq):
             o = o * path[i].orient
 
+        if o == -1:
+            bot_pos = int(bot_pos) + self.windowsize - 1
+
         # retrieve the actual comparison & matches
         cmp = self.cmps[from_seq][to_seq]
         matches = cmp[top_pos]
@@ -156,10 +159,6 @@ class NwayComparison:
         # matches.
         for m in matches:
             bot = m.bot
-
-            # correct for orientation
-            if o == -1:
-                bot = bot - self.windowsize + 1
 
             # if we find one, we're golden!
             if bot == bot_pos:
@@ -316,6 +315,9 @@ def test():
         p2.sort()
         
         assert p == p2
+
+    if run_all:
+        print 'ran all tests'
 
 if __name__ == '__main__':
     test()
