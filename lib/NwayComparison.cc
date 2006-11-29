@@ -24,7 +24,7 @@ void NwayComparison::do_comparisons()
   }
 }
 
-std::vector<NwayPath> NwayComparison::make_paths(unsigned int start_seq, unsigned int pos)
+std::vector<NwayPath> NwayComparison::make_paths(unsigned int start_seq, unsigned int pos, int max_paths)
 {
   std::vector<NwayPath> paths;
 
@@ -40,6 +40,10 @@ std::vector<NwayPath> NwayComparison::make_paths(unsigned int start_seq, unsigne
   const _MatchContainer * cont = cmp->get_matches(pos);
 
   if (cont == NULL) { return paths; }
+
+  max_paths -= cont->num;
+
+  if (max_paths < 0) { return paths; }
   
   for (unsigned int j = 0; j < cont->num; j++) {
     const Match * m = &cont->block[j];
@@ -51,7 +55,7 @@ std::vector<NwayPath> NwayComparison::make_paths(unsigned int start_seq, unsigne
     }
 
     // recurse
-    std::vector<NwayPath> sub_paths = make_paths(next_seq, next_pos);
+    std::vector<NwayPath> sub_paths = make_paths(next_seq, next_pos, max_paths);
     
     // insert this position at the beginning.
     for (unsigned int k = 0; k < sub_paths.size(); k++) {
@@ -106,7 +110,7 @@ std::vector<NwayPath> NwayComparison::filter()
   std::string seq0 = _sequences[0];
 
   for (unsigned int i = 0; i < seq0.length(); i++) {
-    std::vector<NwayPath> paths = make_paths(0, i);
+    std::vector<NwayPath> paths = make_paths(0, i, _max_paths);
 
     for (unsigned int z = 0; z < paths.size(); z++) {
       bool keep_path = true;

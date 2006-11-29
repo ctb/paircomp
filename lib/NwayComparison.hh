@@ -38,13 +38,16 @@ namespace paircomp {
 
   class NwayComparison {
   protected:
+    int _max_paths;
     std::vector<std::string> _sequences;
     std::map<MapIndexPair, ImmutableComparison *> _comparisons;
   public:
     const float threshold;
     const unsigned int windowsize;
 
-    NwayComparison(unsigned int w, float t) : threshold(t), windowsize(w) {};
+    NwayComparison(unsigned int w, float t) : threshold(t), windowsize(w) {
+      _max_paths = 50;
+    };
 
     void add_sequence(const std::string seq) {
       for (unsigned int i = 0; i < _sequences.size(); i++) {
@@ -68,8 +71,11 @@ namespace paircomp {
 
     void do_comparisons();
 
-    std::vector<NwayPath> make_paths(unsigned int start_seq, unsigned int pos);
+    std::vector<NwayPath> make_paths(unsigned int start_seq, unsigned int pos, int max_paths);
     bool check_match(unsigned int from, unsigned int to, const NwayPath& path);
     std::vector<NwayPath> filter();
+
+    int max_paths_at_position() { return _max_paths; }
+    void max_paths_at_position(int m) { _max_paths = m; }
   };
 };
