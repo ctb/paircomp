@@ -1,1 +1,0 @@
-valgrind -v --show-reachable=yes --tool=memcheck --leak-check=yes python test-python-interface.py
