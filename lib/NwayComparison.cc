@@ -96,10 +96,14 @@ bool NwayComparison::check_match(unsigned int from, unsigned int to,
 
 std::vector<NwayPath> NwayComparison::filter()
 {
+  std::vector<NwayPath> ret_paths;
+  if (_sequences.size() < 2) {
+    return ret_paths;
+  }
+
   do_comparisons();
 
   std::string seq0 = _sequences[0];
-  std::vector<NwayPath> ret_paths;
 
   for (unsigned int i = 0; i < seq0.length(); i++) {
     std::vector<NwayPath> paths = make_paths(0, i);

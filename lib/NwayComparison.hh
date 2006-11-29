@@ -55,6 +55,7 @@ namespace paircomp {
       _sequences.push_back(seq);
     }
     std::string get_sequence(unsigned int i) { return _sequences[i]; }
+    unsigned int n_sequences() { return _sequences.size(); }
 
     ImmutableComparison * get_comparison(unsigned int a, unsigned int b) {
       return _comparisons[MapIndexPair(a, b)];
