@@ -1,4 +1,7 @@
-paircomp
-seqcomp
-find_patch
+cmake_install.cmake
+CMakeFiles
+Makefile
 window-extract
+find_patch
+seqcomp
+paircomp

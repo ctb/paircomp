@@ -13,11 +13,13 @@ testdir = os.path.abspath(os.path.dirname(__file__))
 # now build paircomp's python build/lib directory path
 #
 
-platform_str = distutils.util.get_platform()
-version = ".".join(platform.python_version_tuple()[:2])
-paircomp_build_dir = testdir + '/../python/build/lib.%s-%s' % (platform_str,
-                                                             version)
-paircomp_build_dir = os.path.abspath(paircomp_build_dir)
+#platform_str = distutils.util.get_platform()
+#version = ".".join(platform.python_version_tuple()[:2])
+#paircomp_build_dir = testdir + '/../python/build/lib.%s-%s' % (platform_str,
+#                                                             version)
+#paircomp_build_dir = os.path.abspath(paircomp_build_dir)
+paircomp_build_dir = os.path.abspath(testdir + '/../python/')
+#raise Exception(paircomp_build_dir)
 
 #
 # put it in the path

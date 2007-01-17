@@ -5,24 +5,24 @@ parser_mod = Extension("paircomp._paircomp_parser",
                        ["c++-ext/_paircomp_parser.cc",],
                        include_dirs=['../lib',],
                        library_dirs=['../lib',],
-                       libraries=['paircomp', 'stdc++'],
-                       depends=['../lib/libpaircomp.a',])
+                       libraries=['paircomplib', 'stdc++'],
+                       depends=['../lib/libpaircomplib.a',])
 
 # the c++ algorithm extension module (needs to be linked in with libpaircomp.a...)
 algorithms_mod = Extension("paircomp._paircomp_algorithms",
                            ["c++-ext/_paircomp_algorithms.cc",],
                            include_dirs=['../lib',],
                            library_dirs=['../lib',],
-                           libraries=['paircomp', 'stdc++'],
-                           depends=['../lib/libpaircomp.a',])
+                           libraries=['paircomplib', 'stdc++'],
+                           depends=['../lib/libpaircomplib.a',])
 
 # the c++ renderer extension module
 #renderer_mod = Extension("paircomp._paircomp_renderer",
 #                         ["c++-ext/_paircomp_renderer.cc"],
 #                         include_dirs=['../lib',],
 #                         library_dirs=['../lib',],
-#                         libraries=['paircomp', 'stdc++'],
-#                         depends=['../lib/libpaircomp.a',])
+#                         libraries=['paircomplib', 'stdc++'],
+#                         depends=['../lib/libpaircomplib.a',])
 
 # python modules
 package = 'paircomp'
