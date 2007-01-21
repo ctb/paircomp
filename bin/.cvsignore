@@ -5,3 +5,4 @@ window-extract
 find_patch
 seqcomp
 paircomp
+*.exe
