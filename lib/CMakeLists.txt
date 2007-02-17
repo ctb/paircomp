@@ -20,3 +20,6 @@ ADD_LIBRARY(paircomplib STATIC ${SRCS})
 #    LINK_FLAGS "-Wl,-syslibroot,/Developer/SDKs/MacOSX10.4u.sdk -arch ppc -arch i386"
 #  )
 #ENDIF(APPLE)
+
+ADD_SUBDIRECTORY( c++-tests )
+
