@@ -1,3 +1,6 @@
+/*!
+*   \file ImmutableComparison.cc
+*/
 #include "ImmutableComparison.hh"
 #include "algorithms.hh"
 
@@ -5,6 +8,16 @@ using namespace paircomp;
 
 // utility fn to check parameters.
 
+/*!
+*   \fn static void _check_comparison_compatibility(const ImmutableComparison * c1,
+					    const ImmutableComparison * c2)
+*   \brief A utility function to check that the comparison parameters match, throws an exception when incompatible.
+*   \param c1 A pointer to the first ImmutableComparison object.
+*   \param c2 A pointer to the second ImmutableComparison object
+*   \exception paircomp_exception top lengths do not match; were these comparisons done on the same top sequence?
+*   \exception paircomp_exception bottom lengths do not match; were these comparisons done on the same bottom sequence?
+*   \exception paircomp_exception window sizes do not match
+*/
 static void _check_comparison_compatibility(const ImmutableComparison * c1,
 					    const ImmutableComparison * c2)
 {
@@ -19,10 +32,17 @@ static void _check_comparison_compatibility(const ImmutableComparison * c1,
   }
 }
 
-//
-// Some utility functions for sorting...
-//
 
+
+
+
+/*!
+*   \fn static int _compare_matches_by_strength(const void * p1, const void * p2)
+*   \brief Comparse the number of matches between the two Match objects.
+*   \param p1 A void pointer to the first Match object for comparison.
+*   \param p2 A void pointer to the second Match object for comparison.
+*   \return An integer representing the difference in the number of matches between p1 and p2.
+*/
 static int _compare_matches_by_strength(const void * p1, const void * p2)
 {
   const Match * m1 = (const Match *) p1;
@@ -34,14 +54,40 @@ static int _compare_matches_by_strength(const void * p1, const void * p2)
   return i2 - i1;		// sort in descending.
 }
 
+
+
+/*!
+*   \fn static void _sort_matches(_MatchContainer * cont)
+*   \brief Performs a quicksort on the given _MatchContainer object.
+*   \param cont A pointer to a _MatchContainer object to be sorted.
+*   
+*/
 static void _sort_matches(_MatchContainer * cont)
 {
   qsort(cont->block, cont->num, sizeof(Match), _compare_matches_by_strength);
 }
 
+/*!
+*   \var const std::string forward_match("ACGTN")
+*   \brief A string object with an ordering of characters for a forward match.
+*/
 const std::string forward_match("ACGTN");
+
+/*!
+*   \var const std::string reverse_complement_match("TGCAN")
+*   \brief A string object with an ordering of characters for a reverse match.
+*/
 const std::string reverse_complement_match("TGCAN");
 
+
+/*!
+*   \fn bool test_forward_match(char ch1, char ch2)
+*   \brief Function for testing a forward match between two characters.
+*   \param ch1 The first character representing a nucelotide.
+*   \param ch2 The second character representing a nucelotide.
+*   \return True if ch1 and ch2 match and ch1 is not 'N', false otherwise.
+*   \exception paircomp_exception test_forward_match failed
+*/
 bool test_forward_match(char ch1, char ch2)
 {
   std::string::size_type i = forward_match.find(ch1);
@@ -58,6 +104,17 @@ bool test_forward_match(char ch1, char ch2)
   return false;
 }
 
+
+/*!
+*   \fn bool test_reverse_complement_match(char ch1, char ch2)
+*   \brief Function for testing a reverse match between two characters.
+*   \param ch1 The first character representing a nucelotide.
+*   \param ch2 The second character representing a nucelotide.
+*   \return True if ch1 and ch2 match and ch1 is not 'N', false otherwise.
+*   \exception pair_comp test_reverse_complement_match failed
+*    
+*
+*/
 bool test_reverse_complement_match(char ch1, char ch2)
 {
   std::string::size_type i = forward_match.find(ch1);
@@ -74,7 +131,7 @@ bool test_reverse_complement_match(char ch1, char ch2)
   return false;
 }
 
-///////
+
 
 //
 // ImmutableComparison: Class implementation.
@@ -153,6 +210,8 @@ bool ImmutableComparison::contains_match(const Match &m) const
   return false;
 }
 
+
+/******************************************************************************/
 ImmutableComparison * ImmutableComparison::filter_by_threshold(float threshold)
   const
 {
@@ -195,34 +254,8 @@ ImmutableComparison * ImmutableComparison::filter_by_threshold(float threshold)
   return new_cmp;
 }
 
-ImmutableComparison * ImmutableComparison::filter_by_orientation(bool forward,
-								 bool reverse)
-  const
-{
-  MutableComparison new_cmp(_top_length, _bottom_length, _windowsize);
-  matches_iterator iter;
 
-  // Loop through & transfer all matches above threshold into a new
-  // container.
-
-  for (iter = _matches.begin(); iter != _matches.end(); iter++) {
-    _MatchContainer * cont = iter->second;
-
-    for (unsigned int i = 0; i < cont->num; i++) {
-      Match * m = &cont->block[i];
-      if (m->get_orientation() == 1 && forward) {
-	Match * new_m = m->copy();
-	new_cmp.add_match(new_m);
-      } else if (m->get_orientation() == -1 && reverse) {
-	Match * new_m = m->copy();
-	new_cmp.add_match(new_m);
-      }
-    }
-  }
-
-  return new ImmutableComparison(&new_cmp);
-}
-
+/******************************************************************************/
 ImmutableComparison * ImmutableComparison::reverse_top_matches() const
 {
   MutableComparison new_cmp(_top_length, _bottom_length, _windowsize);
@@ -245,6 +278,8 @@ ImmutableComparison * ImmutableComparison::reverse_top_matches() const
 }
 
 
+
+/******************************************************************************/
 ImmutableComparison * ImmutableComparison::reverse_bot_matches() const
 {
   MutableComparison new_cmp(_top_length, _bottom_length, _windowsize);
@@ -266,11 +301,12 @@ ImmutableComparison * ImmutableComparison::reverse_bot_matches() const
   return new ImmutableComparison(&new_cmp);
 }
 
-//
-// Convert the comparison into a set of 1-bp matches between actually-matching
-// bases, given the sequences to compare.
-//
 
+/******************************************************************************/
+//
+// 
+//
+/******************************************************************************/
 ImmutableComparison * ImmutableComparison::isolate_matching_bases(
 					     std::string top,
 					     std::string bot)
@@ -321,6 +357,9 @@ ImmutableComparison * ImmutableComparison::isolate_matching_bases(
   return new ImmutableComparison(&new_cmp);
 }
 
+
+
+/******************************************************************************/
 ImmutableComparison * ImmutableComparison::invert() const
 {
   MutableComparison inverted(_bottom_length, _top_length,
@@ -342,6 +381,9 @@ ImmutableComparison * ImmutableComparison::invert() const
   return new ImmutableComparison(&inverted);
 }
 
+
+
+/******************************************************************************/
 ImmutableComparison * ImmutableComparison::subtract(const 
 						    ImmutableComparison &other)
   const
@@ -362,8 +404,8 @@ ImmutableComparison * ImmutableComparison::subtract(const
 
       // If other doesn't contain this match, copy it.
       if (!other.contains_match(*this_m)) {
-	Match * copy = this_m->copy();
-	subtracted.add_match(copy);
+	     Match * copy = this_m->copy();
+	     subtracted.add_match(copy);
       }
     }
   }
@@ -371,6 +413,9 @@ ImmutableComparison * ImmutableComparison::subtract(const
   return new ImmutableComparison(&subtracted);
 }
 
+
+
+/******************************************************************************/
 bool ImmutableComparison::is_empty() const
 {
   if (_matches.begin() == _matches.end()) {
@@ -379,6 +424,9 @@ bool ImmutableComparison::is_empty() const
   return false;
 }
 
+
+
+/******************************************************************************/
 bool ImmutableComparison::contains(const ImmutableComparison &other)
   const
 {
@@ -397,6 +445,9 @@ bool ImmutableComparison::contains(const ImmutableComparison &other)
   return answer;
 }
 
+
+
+/******************************************************************************/
 bool ImmutableComparison::equals(const ImmutableComparison &other)
   const
 {
@@ -405,6 +456,9 @@ bool ImmutableComparison::equals(const ImmutableComparison &other)
   return (this->contains(other) && other.contains(*this));
 }
 
+
+
+/******************************************************************************/
 //
 // save_as_seqcomp -- save to a given file in Tristan-style b3.5 output.
 //
@@ -454,6 +508,10 @@ void ImmutableComparison::save_as_seqcomp(char * filename)
   fclose(fp);
 }
 
+
+
+
+/******************************************************************************/
 //
 // save_as_paircomp -- saves a comparison in the (simple) paircomp format.
 //
@@ -486,6 +544,10 @@ void ImmutableComparison::save_as_paircomp(char * filename)
   fclose(fp);
 }
 
+
+
+
+/******************************************************************************/
 ImmutableComparison *
 ImmutableComparison::intersect(const ImmutableComparison &other)
   const
@@ -527,9 +589,9 @@ ImmutableComparison::intersect(const ImmutableComparison &other)
   return new ImmutableComparison(&cmp);
 }
 
-///////
 
 
+/*******************************************************************************/
 ImmutableComparison * ImmutableComparison::build_transitive(const
 	    ImmutableComparison &bc,
             const std::string a_seq,
@@ -569,7 +631,9 @@ ImmutableComparison * ImmutableComparison::build_transitive(const
 
   return new ImmutableComparison(&new_ac);
 }
+/*******************************************************************************/
 
+/*******************************************************************************/
 void ImmutableComparison::_build_forward(const ImmutableComparison &bc,
 		    const char * top, const char * bot, const char * bot_rev,
 		    unsigned int ithreshold, MutableComparison &new_ac)
@@ -622,7 +686,9 @@ void ImmutableComparison::_build_forward(const ImmutableComparison &bc,
 
   return;
 }
+/*******************************************************************************/
 
+/*******************************************************************************/
 void ImmutableComparison::filter_transitively(const ImmutableComparison &bc,
 					      const ImmutableComparison &ac,
 					      ImmutableComparison **new_ab_i,
@@ -677,6 +743,13 @@ void ImmutableComparison::filter_transitively(const ImmutableComparison &bc,
 
 // #define _TEST_TRANSITIVE
 
+
+
+
+
+
+
+/******************************************************************************/
 void ImmutableComparison::_filter_forward(
 		  const ImmutableComparison &bc, bool rev_b,
 		  const ImmutableComparison &ac, bool rev_c,
@@ -706,7 +779,7 @@ void ImmutableComparison::_filter_forward(
       const Match * ab_match = &ab_cont->block[i];
 
       if (ab_match->get_orientation() == -1) {
-	continue;
+	     continue;
       }
 
       iter_bc = bc._matches.find(ab_match->get_bot_pos());
@@ -721,10 +794,10 @@ void ImmutableComparison::_filter_forward(
       const _MatchContainer * bc_cont = iter_bc->second;
 
       for (unsigned int j = 0; j < ac_cont->num; j++) {
-	const Match * ac_match = &ac_cont->block[j];
+	     const Match * ac_match = &ac_cont->block[j];
 
 	for (unsigned int k = 0; k < bc_cont->num; k++) {
-	  const Match * bc_match = &bc_cont->block[k];
+	   const Match * bc_match = &bc_cont->block[k];
 
 #ifdef _TEST_TRANSITIVE
 	  printf("(%d %d) --> (%d %d) --> (%d %d)??\n",
@@ -732,7 +805,11 @@ void ImmutableComparison::_filter_forward(
 		 bc_match->get_top_pos(), bc_match->get_bot_pos(),
 		 ac_match->get_top_pos(), ac_match->get_bot_pos());
 #endif // TEST_TRANSITIVE
-
+      
+	  /*******************************************************************
+	  * Check if there is  match at the same positions between bc and ac,
+	  * if the position and orientation match then it is transitive. 
+	  ********************************************************************/
 	  if (bc_match->get_bot_pos() == ac_match->get_bot_pos() &&
 	      (ab_match->get_orientation() * bc_match->get_orientation() ==
 	       ac_match->get_orientation())) {
@@ -773,3 +850,4 @@ void ImmutableComparison::_filter_forward(
     }
   }
 }
+/*******************************************************************************/

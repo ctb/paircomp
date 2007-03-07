@@ -1,28 +1,30 @@
 #include "algorithms2.hh"
+/*!
+*   \file algorithms2.cc
+*   \brief Contains the functions for the hashed_n_comparison implementation.
+*
+*   This code (algorithms2.cc) is modified from the Dot Plot Sequence Comparison
+*   Code.  The original author is Shoudan Liang, and the code was
+*   subsequently modified by Titus Brown for inclusion in the paircomp
+*   subproject of the FamilyJewels project.
+*
+*   The Dot Plot Sequence Comparison Code was developed by  the U.S.
+*   Government as represented by the Administrator of the National
+*   Aeronautics and Space Administration.  No copyright is claimed in the
+*   United States on behalf of the U.S. government.
+*
+*   The Dot Plot Sequence Comparison Code may be used, copied, and
+*   provided to others as part of the FamilyJewels - Comparative sequence
+*   analysis for genomic data  software distributed by California Institute
+*   of Technology under the GNU General Public License.  This software is
+*   provided without any warranty, either express or implied.
+*
+*   For more information about  The Dot Plot Sequence Comparison Code
+*   contact Shoudan Liang, NASA Ames Research Center, Moffett Field, CA
+*   94035 (E-mail: Shoudan.Liang@nasa.gov, Phone: 650-604-6631)
+*/
 
-/*********************************************************************
- *
- * This code (algorithms2.cc) is modified from the Dot Plot Sequence Comparison
- * Code.  The original author is Shoudan Liang, and the code was
- * subsequently modified by Titus Brown for inclusion in the paircomp
- * subproject of the FamilyJewels project.
- *
- * The Dot Plot Sequence Comparison Code was developed by  the U.S.
- * Government as represented by the Administrator of the National
- * Aeronautics and Space Administration.  No copyright is claimed in the
- * United States on behalf of the U.S. government.
- *
- * The Dot Plot Sequence Comparison Code may be used, copied, and
- * provided to others as part of the FamilyJewels - Comparative sequence
- * analysis for genomic data  software distributed by California Institute
- * of Technology under the GNU General Public License.  This software is
- * provided without any warranty, either express or implied.
- *
- * For more information about  The Dot Plot Sequence Comparison Code
- * contact Shoudan Liang, NASA Ames Research Center, Moffett Field, CA
- * 94035 (E-mail: Shoudan.Liang@nasa.gov, Phone: 650-604-6631)
- *
- *********************************************************************/
+/*********************************************************************/
 
 using namespace paircomp;
 
@@ -32,6 +34,35 @@ using namespace paircomp;
 #include <fstream>
 #include <iostream>
 
+/***************************************************************************/
+/*!
+*   \fn static void _find_match(const unsigned int top_pos,
+			const std::string current_pattern,
+			const unsigned int windowsize,
+			const unsigned int hard_threshold,
+			std::set<std::string> &substring,
+			std::map<std::string, std::set<unsigned int> > &word_locations,
+			int mismatches_allowed,
+			std::string &word,
+			MutableComparison &cmp)
+*   \brief A helper function for finding matches in a sequence.
+*   \param top_pos The position in the top sequence to begin scanning for a Match.
+*   \param current_pattern The current piece from the top sequence to frind in the bottom sequence.
+*   \param windowsize An integer indicating the scanning window size.
+*   \param hard_threshold The number of matches to encode into an underlying Match data object.
+*   \param substring A reference to a string object representing a substring "tree" of subwords from arg word.
+*   \param word_locations An associative array for "hashing" to positions in the substring.
+*   \param mismatches_allowed An integer indicating how many mismatches can be tolerated
+*   \param word A a reference to a string object (often a substring) to find pattern maches in.
+*   \param cmp A reference to a MutableComparison object for saving the match results.
+*   \sa hashed_n_comparison
+*   \sa MutableComparison
+*   \sa Match
+*   
+*
+*   Function is recursive so parameter values are meant to pass to one another when calling.
+*
+*/
 static void _find_match(const unsigned int top_pos,
 			const std::string current_pattern,
 			const unsigned int windowsize,
@@ -41,7 +72,14 @@ static void _find_match(const unsigned int top_pos,
 			int mismatches_allowed,
 			std::string &word,
 			MutableComparison &cmp);
+/***************************************************************************/
 
+
+/***************************************************************************/
+/***************************************
+*hashed_n_comparison definition 
+* already documented in the header file.
+****************************************/
 ImmutableComparison * paircomp::hashed_n_comparison(const std::string seq1,
 						    const std::string seq2,
 						    unsigned int windowsize,
@@ -94,7 +132,14 @@ ImmutableComparison * paircomp::hashed_n_comparison(const std::string seq1,
 
   return new ImmutableComparison(&cmp);
 }
+/***************************************************************************/
 
+
+
+
+
+/***************************************************************************/
+/* _find_match definition*/
 static void _find_match(const unsigned int top_pos,
 			const std::string current_pattern,
 			const unsigned int windowsize,
@@ -104,6 +149,8 @@ static void _find_match(const unsigned int top_pos,
 			int mismatches_allowed, std::string &word,
 			MutableComparison &cmp) {
   static char nucl[]={'A','C','G','T', 'N'};
+  
+  
   if (word.size() == windowsize) {		// done! output the results
     std::set<unsigned int>::iterator it = word_locations[word].begin();
 
@@ -123,10 +170,10 @@ static void _find_match(const unsigned int top_pos,
     if ('N'==c) {
       if (mismatches_allowed > 0) {
 	// 'N' doesn't match anything
-	_find_match(top_pos, current_pattern, windowsize, hard_threshold, substring, word_locations, mismatches_allowed-1, word, cmp);
+	    _find_match(top_pos, current_pattern, windowsize, hard_threshold, substring, word_locations, mismatches_allowed-1, word, cmp);
       }
     } else {
-      _find_match(top_pos, current_pattern, windowsize, hard_threshold, substring, word_locations, mismatches_allowed, word, cmp);
+       _find_match(top_pos, current_pattern, windowsize, hard_threshold, substring, word_locations, mismatches_allowed, word, cmp);
     }
   }
   if (mismatches_allowed-- > 0) {
@@ -146,3 +193,4 @@ static void _find_match(const unsigned int top_pos,
 
   return;
 }
+/***************************************************************************/

@@ -2,7 +2,9 @@
 #include <stdlib.h>
 #include <ctype.h>
 #include <string.h>
-
+/*!
+*   \file MutableComparison.cc
+*/
 #include "MutableComparison.hh"
 
 using namespace paircomp;
@@ -285,7 +287,11 @@ void MutableComparison::parse_seqcomp_format(const char * inbuf)
 }
 
 ///// File loading stuff
-
+/*!
+*   \fn char * _load_file(char * filename)
+*   \brief A helper function for loading a file and returning the character text.
+*   \param filename A valid filename.
+*/
 char * _load_file(char * filename)
 {
   FILE * fp;

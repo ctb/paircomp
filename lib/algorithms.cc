@@ -1,7 +1,9 @@
 // Function implementations for different 'seqcomp'-style algorithms.
 //
 // See README.txt for license & copyright information.
-
+/*!
+*   \file algorithms.cc
+*/
 #include <string>
 #include <ctype.h>
 
@@ -9,6 +11,13 @@
 
 using namespace paircomp;
 
+/*! \def MATCH(top_s, top_i, bot_s, bot_i)
+*   \brief Macro checks to see if characters in top_s at index top_i and bot_s at index bit_i match. 
+*   \param top_s Character array for the top DNA/RNA/Protein sequence.
+*   \param top_i Index for the top sequence.
+*   \param bot_s Character array for the bottom DNA/RNA/Protein sequence.
+*   \param bot_i Index for the bottom sequence.
+*/
 #define MATCH(top_s, top_i, bot_s, bot_i) ((top_s)[top_i] == (bot_s)[bot_i] &&\
 	      (top_s)[top_i] != 'N' && \
 	      (top_s)[top_i] != 'X')
