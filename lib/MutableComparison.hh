@@ -91,7 +91,7 @@ namespace paircomp {
     */
     void parse_seqcomp_format(const char * buf);
     
-//}; //ends namespace paircomp	
+}; //ends namespace paircomp	
   
   /*!
   *   \fn MutableComparison * load_paircomp_file(unsigned int top_len, unsigned int bot_len, 
@@ -136,7 +136,7 @@ namespace paircomp {
 	*/
     ComparisonParserException(const std::string & m)
       : paircomp_exception(m) { ; };
- };//fake end to the paircomp namespace for doxygen to parse these functions, just comment this out before compiling, and uncomment the previous namespace end. 
+ //};//fake end to the paircomp namespace for doxygen to parse these functions, just comment this out before compiling, and uncomment the previous namespace end. 
 
   };
 };
