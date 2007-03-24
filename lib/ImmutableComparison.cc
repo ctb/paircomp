@@ -1,6 +1,7 @@
 /*!
 *   \file ImmutableComparison.cc
 */
+
 #include "ImmutableComparison.hh"
 #include "algorithms.hh"
 
@@ -211,7 +212,8 @@ bool ImmutableComparison::contains_match(const Match &m) const
 }
 
 
-/******************************************************************************/
+/*****************************************************************************/
+
 ImmutableComparison * ImmutableComparison::filter_by_threshold(float threshold)
   const
 {
@@ -254,8 +256,43 @@ ImmutableComparison * ImmutableComparison::filter_by_threshold(float threshold)
   return new_cmp;
 }
 
+/*****************************************************************************/
 
-/******************************************************************************/
+ImmutableComparison * ImmutableComparison::filter_by_orientation(bool fwd,
+								 bool rev)
+  const
+{
+  matches_iterator iter;
+
+  MutableComparison * new_cmp = new MutableComparison(_top_length,
+						      _bottom_length,
+						      _windowsize);
+
+  // Loop through & transfer all matches with the right orientation(s) into a
+  // new container.
+
+  for (iter = _matches.begin(); iter != _matches.end(); iter++) {
+    unsigned int pos = iter->first;
+    _MatchContainer * old = iter->second;
+
+    unsigned int j;
+    for (j = 0; j < old->num; j++) {
+      Match * m = &old->block[j];
+      if ((fwd && m->get_orientation() == 1) || \
+	  (rev && m->get_orientation() == -1)) {
+	Match * m2 = m->copy();
+	new_cmp->add_match(m2);
+      }
+    }
+  }
+
+  ImmutableComparison * cmp = new ImmutableComparison(new_cmp);
+  delete new_cmp;
+
+  return cmp;
+}
+
+/*****************************************************************************/
 ImmutableComparison * ImmutableComparison::reverse_top_matches() const
 {
   MutableComparison new_cmp(_top_length, _bottom_length, _windowsize);
@@ -279,7 +316,7 @@ ImmutableComparison * ImmutableComparison::reverse_top_matches() const
 
 
 
-/******************************************************************************/
+/*****************************************************************************/
 ImmutableComparison * ImmutableComparison::reverse_bot_matches() const
 {
   MutableComparison new_cmp(_top_length, _bottom_length, _windowsize);
@@ -302,11 +339,11 @@ ImmutableComparison * ImmutableComparison::reverse_bot_matches() const
 }
 
 
-/******************************************************************************/
+/*****************************************************************************/
 //
 // 
 //
-/******************************************************************************/
+/*****************************************************************************/
 ImmutableComparison * ImmutableComparison::isolate_matching_bases(
 					     std::string top,
 					     std::string bot)
@@ -359,7 +396,7 @@ ImmutableComparison * ImmutableComparison::isolate_matching_bases(
 
 
 
-/******************************************************************************/
+/*****************************************************************************/
 ImmutableComparison * ImmutableComparison::invert() const
 {
   MutableComparison inverted(_bottom_length, _top_length,
@@ -383,7 +420,7 @@ ImmutableComparison * ImmutableComparison::invert() const
 
 
 
-/******************************************************************************/
+/*****************************************************************************/
 ImmutableComparison * ImmutableComparison::subtract(const 
 						    ImmutableComparison &other)
   const
@@ -415,7 +452,7 @@ ImmutableComparison * ImmutableComparison::subtract(const
 
 
 
-/******************************************************************************/
+/*****************************************************************************/
 bool ImmutableComparison::is_empty() const
 {
   if (_matches.begin() == _matches.end()) {
@@ -426,7 +463,7 @@ bool ImmutableComparison::is_empty() const
 
 
 
-/******************************************************************************/
+/*****************************************************************************/
 bool ImmutableComparison::contains(const ImmutableComparison &other)
   const
 {
@@ -447,7 +484,7 @@ bool ImmutableComparison::contains(const ImmutableComparison &other)
 
 
 
-/******************************************************************************/
+/*****************************************************************************/
 bool ImmutableComparison::equals(const ImmutableComparison &other)
   const
 {
@@ -458,7 +495,7 @@ bool ImmutableComparison::equals(const ImmutableComparison &other)
 
 
 
-/******************************************************************************/
+/*****************************************************************************/
 //
 // save_as_seqcomp -- save to a given file in Tristan-style b3.5 output.
 //
@@ -511,7 +548,7 @@ void ImmutableComparison::save_as_seqcomp(char * filename)
 
 
 
-/******************************************************************************/
+/*****************************************************************************/
 //
 // save_as_paircomp -- saves a comparison in the (simple) paircomp format.
 //
@@ -547,7 +584,7 @@ void ImmutableComparison::save_as_paircomp(char * filename)
 
 
 
-/******************************************************************************/
+/*****************************************************************************/
 ImmutableComparison *
 ImmutableComparison::intersect(const ImmutableComparison &other)
   const
@@ -591,7 +628,7 @@ ImmutableComparison::intersect(const ImmutableComparison &other)
 
 
 
-/*******************************************************************************/
+/****************************************************************************/
 ImmutableComparison * ImmutableComparison::build_transitive(const
 	    ImmutableComparison &bc,
             const std::string a_seq,
@@ -631,9 +668,9 @@ ImmutableComparison * ImmutableComparison::build_transitive(const
 
   return new ImmutableComparison(&new_ac);
 }
-/*******************************************************************************/
+/*****************************************************************************/
 
-/*******************************************************************************/
+/*****************************************************************************/
 void ImmutableComparison::_build_forward(const ImmutableComparison &bc,
 		    const char * top, const char * bot, const char * bot_rev,
 		    unsigned int ithreshold, MutableComparison &new_ac)
@@ -686,9 +723,9 @@ void ImmutableComparison::_build_forward(const ImmutableComparison &bc,
 
   return;
 }
-/*******************************************************************************/
+/*****************************************************************************/
 
-/*******************************************************************************/
+/*****************************************************************************/
 void ImmutableComparison::filter_transitively(const ImmutableComparison &bc,
 					      const ImmutableComparison &ac,
 					      ImmutableComparison **new_ab_i,
@@ -749,7 +786,7 @@ void ImmutableComparison::filter_transitively(const ImmutableComparison &bc,
 
 
 
-/******************************************************************************/
+/*****************************************************************************/
 void ImmutableComparison::_filter_forward(
 		  const ImmutableComparison &bc, bool rev_b,
 		  const ImmutableComparison &ac, bool rev_c,
@@ -850,4 +887,4 @@ void ImmutableComparison::_filter_forward(
     }
   }
 }
-/*******************************************************************************/
+/****************************************************************************/
