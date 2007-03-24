@@ -31,10 +31,10 @@ CMAKE_COMMAND = /usr/local/bin/cmake
 RM = /usr/local/bin/cmake -E remove -f
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /u/t/dev/cartwheel-tree
+CMAKE_SOURCE_DIR = /u/t/dev/cartwheel-tree/paircomp
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /u/t/dev/cartwheel-tree
+CMAKE_BINARY_DIR = /u/t/dev/cartwheel-tree/paircomp
 
 # Include the progress variables for this target.
 include CMakeFiles/progress.make
@@ -93,51 +93,51 @@ test/fast: test
 
 # The main all target
 all: cmake_check_build_system
-	cd /u/t/dev/cartwheel-tree && $(CMAKE_COMMAND) -E cmake_progress_start /u/t/dev/cartwheel-tree/CMakeFiles $(CMAKE_ALL_PROGRESS)
-	cd /u/t/dev/cartwheel-tree && $(MAKE) -f CMakeFiles/Makefile2 paircomp/lib/c++-tests/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /u/t/dev/cartwheel-tree/CMakeFiles 0
+	cd /u/t/dev/cartwheel-tree/paircomp && $(CMAKE_COMMAND) -E cmake_progress_start /u/t/dev/cartwheel-tree/paircomp/CMakeFiles $(CMAKE_ALL_PROGRESS)
+	cd /u/t/dev/cartwheel-tree/paircomp && $(MAKE) -f CMakeFiles/Makefile2 lib/c++-tests/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /u/t/dev/cartwheel-tree/paircomp/CMakeFiles 0
 
 # The main clean target
 clean:
-	cd /u/t/dev/cartwheel-tree && $(MAKE) -f CMakeFiles/Makefile2 paircomp/lib/c++-tests/clean
+	cd /u/t/dev/cartwheel-tree/paircomp && $(MAKE) -f CMakeFiles/Makefile2 lib/c++-tests/clean
 
 # The main clean target
 clean/fast: clean
 
 # Prepare targets for installation.
 preinstall: all
-	cd /u/t/dev/cartwheel-tree && $(MAKE) -f CMakeFiles/Makefile2 paircomp/lib/c++-tests/preinstall
+	cd /u/t/dev/cartwheel-tree/paircomp && $(MAKE) -f CMakeFiles/Makefile2 lib/c++-tests/preinstall
 
 # Prepare targets for installation.
 preinstall/fast:
-	cd /u/t/dev/cartwheel-tree && $(MAKE) -f CMakeFiles/Makefile2 paircomp/lib/c++-tests/preinstall
+	cd /u/t/dev/cartwheel-tree/paircomp && $(MAKE) -f CMakeFiles/Makefile2 lib/c++-tests/preinstall
 
 # clear depends
 depend:
 	$(CMAKE_COMMAND) -H$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 1
 
 # Convenience name for target.
-paircomp/lib/c++-tests/CMakeFiles/test-transit.dir/rule:
-	cd /u/t/dev/cartwheel-tree && $(MAKE) -f CMakeFiles/Makefile2 paircomp/lib/c++-tests/CMakeFiles/test-transit.dir/rule
+lib/c++-tests/CMakeFiles/test-transit.dir/rule:
+	cd /u/t/dev/cartwheel-tree/paircomp && $(MAKE) -f CMakeFiles/Makefile2 lib/c++-tests/CMakeFiles/test-transit.dir/rule
 
 # Convenience name for target.
-test-transit: paircomp/lib/c++-tests/CMakeFiles/test-transit.dir/rule
+test-transit: lib/c++-tests/CMakeFiles/test-transit.dir/rule
 
 # fast build rule for target.
 test-transit/fast:
-	cd /u/t/dev/cartwheel-tree && $(MAKE) -f paircomp/lib/c++-tests/CMakeFiles/test-transit.dir/build.make paircomp/lib/c++-tests/CMakeFiles/test-transit.dir/build
+	cd /u/t/dev/cartwheel-tree/paircomp && $(MAKE) -f lib/c++-tests/CMakeFiles/test-transit.dir/build.make lib/c++-tests/CMakeFiles/test-transit.dir/build
 
 # target to build an object file
 test-transit.o:
-	cd /u/t/dev/cartwheel-tree && $(MAKE) -f paircomp/lib/c++-tests/CMakeFiles/test-transit.dir/build.make paircomp/lib/c++-tests/CMakeFiles/test-transit.dir/test-transit.o
+	cd /u/t/dev/cartwheel-tree/paircomp && $(MAKE) -f lib/c++-tests/CMakeFiles/test-transit.dir/build.make lib/c++-tests/CMakeFiles/test-transit.dir/test-transit.o
 
 # target to preprocess a source file
 test-transit.i:
-	cd /u/t/dev/cartwheel-tree && $(MAKE) -f paircomp/lib/c++-tests/CMakeFiles/test-transit.dir/build.make paircomp/lib/c++-tests/CMakeFiles/test-transit.dir/test-transit.i
+	cd /u/t/dev/cartwheel-tree/paircomp && $(MAKE) -f lib/c++-tests/CMakeFiles/test-transit.dir/build.make lib/c++-tests/CMakeFiles/test-transit.dir/test-transit.i
 
 # target to generate assembly for a file
 test-transit.s:
-	cd /u/t/dev/cartwheel-tree && $(MAKE) -f paircomp/lib/c++-tests/CMakeFiles/test-transit.dir/build.make paircomp/lib/c++-tests/CMakeFiles/test-transit.dir/test-transit.s
+	cd /u/t/dev/cartwheel-tree/paircomp && $(MAKE) -f lib/c++-tests/CMakeFiles/test-transit.dir/build.make lib/c++-tests/CMakeFiles/test-transit.dir/test-transit.s
 
 # Help Target
 help::
@@ -165,5 +165,5 @@ help::
 # No rule that depends on this can have commands that come from listfiles
 # because they might be regenerated.
 cmake_check_build_system:
-	cd /u/t/dev/cartwheel-tree && $(CMAKE_COMMAND) -H$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 0
+	cd /u/t/dev/cartwheel-tree/paircomp && $(CMAKE_COMMAND) -H$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 0
 

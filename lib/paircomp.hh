@@ -31,4 +31,6 @@
 #include "algorithms.hh"
 #include "algorithms2.hh"
 
+#include "NwayComparison.hh"
+
 #endif // PAIRCOMP_HH
