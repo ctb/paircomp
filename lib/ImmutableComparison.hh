@@ -149,13 +149,24 @@ class ImmutableComparison : public Comparison {
 	*   \fn ImmutableComparison * filter_by_threshold(float threshold) const
 	*   \brief Filter the comparison at a given threshold.
 	*   \param threshold A percentage threshold a match should pass (is rounded up).
-	*   \return An ImmutableComparison object with all of the mathces equal/above the threshold.
+	*   \return An ImmutableComparison object with all of the matches equal/above the threshold.
 	*
 	*   Function goes through all matches in _matches. Matches above the threshold 
-	*   are places into a new ImmutableComparison object.
+	*   are placed into a new ImmutableComparison object.
 	*/
     ImmutableComparison * filter_by_threshold(float threshold) const;
 
+	/*!
+	*   \fn ImmutableComparison * filter_by_orientation(bool fwd, bool rev) const
+	*   \brief Filter the comparison to contain only matches in the given orientation.
+	*   \param fwd Only retain forward matches
+	*   \param rev Only retain reverse matches
+	*   \return An ImmutableComparison object with all of the matches in the right orientation.
+	*
+	*   Function goes through all matches in _matches. Matches with the correct orientation(s)
+	*   are placed into a new ImmutableComparison object.
+	*/
+    ImmutableComparison * filter_by_orientation(bool fwd, bool rev) const;
 
 	/*!
 	*   \fn ImmutableComparison * reverse_top_matches() const
