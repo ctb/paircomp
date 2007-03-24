@@ -4,8 +4,6 @@ import gc
 import sys, os, fasta
 import paircomp
 
-assert paircomp.__version__ == "1.0"
-
 dirname = os.path.dirname(__file__)
 thisdir = os.path.normpath(dirname) + '/'
 bindir = os.path.join(thisdir, '../../bin/')

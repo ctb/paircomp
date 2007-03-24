@@ -22,7 +22,7 @@
 #ifndef PAIRCOMP_HH		// guard against multiple inclusion
 #define PAIRCOMP_HH
 
-#define VERSION 1.0
+#define VERSION 1.1
 
 #include "Comparison.hh"
 #include "MutableComparison.hh"

@@ -2,7 +2,7 @@
 #
 # See README.txt for license and copyright information.
 
-__version__ = "1.0"
+__version__ = "1.1"
 
 from parser import parse_paircomp, parse_seqcomp, filter_transitively, \
      build_transitive
