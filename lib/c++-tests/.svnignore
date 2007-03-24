@@ -2,3 +2,5 @@ a
 test-empty
 test-transit
 DartTestfile.txt
+CMakeFiles
+cmake_install.cmake
