@@ -272,7 +272,6 @@ ImmutableComparison * ImmutableComparison::filter_by_orientation(bool fwd,
   // new container.
 
   for (iter = _matches.begin(); iter != _matches.end(); iter++) {
-    unsigned int pos = iter->first;
     _MatchContainer * old = iter->second;
 
     unsigned int j;
