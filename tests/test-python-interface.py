@@ -107,12 +107,20 @@ class Test:
         assert cmp.windowsize == 20
         assert cmp.top_len == len(el)
         assert cmp.bot_len == len(br)
-        
+
+        n = []
         for i in range(0, len(el)):
             l = cmp[i]
-            if len(l):
-                for m in l:
-                    assert m.top == i
+            for m in l:
+                assert m.top == i
+            n.extend(l)
+
+        n2 = []
+        for match in cmp:
+            n2.append(match)
+
+        for (a, b) in zip(n, n2):
+            assert a == b
 
         print 'Testing reverse of top/bottom...',
 

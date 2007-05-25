@@ -411,10 +411,15 @@ notations are present for clarity.</p>
 in <tt class="docutils literal"><span class="pre">b</span></tt>; if an element is in <tt class="docutils literal"><span class="pre">b</span></tt> but not <tt class="docutils literal"><span class="pre">a</span></tt>, nothing is done.
 That is, <tt class="docutils literal"><span class="pre">a.subtract(b)</span></tt> is equivalent to <tt class="docutils literal"><span class="pre">a.subtract(b.intersect(a))</span></tt>.</p>
 </blockquote>
-<p><strong>Accessing matches:</strong> <tt class="docutils literal"><span class="pre">get_matches</span></tt>/<tt class="docutils literal"><span class="pre">[]</span></tt> and <tt class="docutils literal"><span class="pre">isolate_matching_bases</span></tt></p>
+<p><strong>Accessing matches:</strong> iterators, <tt class="docutils literal"><span class="pre">get_matches</span></tt>/<tt class="docutils literal"><span class="pre">[]</span></tt> and <tt class="docutils literal"><span class="pre">isolate_matching_bases</span></tt></p>
 <blockquote>
-<p><tt class="docutils literal"><span class="pre">get_matches</span></tt> accesses the matches for a particular position (on the
-top sequence).</p>
+<p>You can access all of the matches individually by using the iterator
+interface:</p>
+<pre class="literal-block">
+``for match in cmp: print match``
+</pre>
+<p>Also, <tt class="docutils literal"><span class="pre">get_matches</span></tt> accesses the matches for a particular
+position (on the top sequence).</p>
 <blockquote>
 <p>Usage:</p>
 <blockquote>

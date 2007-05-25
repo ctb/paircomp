@@ -111,6 +111,12 @@ class Comparison:
     def __getitem__(self, i):
         return self.get_matches(i)
 
+    def __iter__(self):
+        for i in range(0, self.top_len):
+            matchlist = self.get_matches(i)
+            for match in matchlist:
+                yield match
+
 #
 # Match
 #
@@ -119,6 +125,8 @@ class Match:
     """
     An individual match.  Contains top, bot, length, matches, and orientation.
     """
+    __slots__ = ['top', 'bot', 'length', 'matches', 'orientation' ]
+    
     def __init__(self, top, bot, length, matches, orientation):
         self.top = top
         self.bot = bot
@@ -132,3 +140,10 @@ class Match:
                                                               self.matches,
                                                               self.length,
                                                               self.orientation)
+
+    def __eq__(self, other):
+        return (self.top == other.top and
+                self.bot == other.bot and
+                self.length == other.length and
+                self.matches == other.matches and
+                self.orientation == other.orientation)

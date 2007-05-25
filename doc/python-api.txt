@@ -132,10 +132,15 @@ Each ``Comparison`` object also has a bunch of methods.  They are:
 	in ``b``; if an element is in ``b`` but not ``a``, nothing is done.
 	That is, ``a.subtract(b)`` is equivalent to ``a.subtract(b.intersect(a))``.
 
-  **Accessing matches:** ``get_matches``/``[]`` and ``isolate_matching_bases``
+  **Accessing matches:** iterators, ``get_matches``/``[]`` and ``isolate_matching_bases``
 
-     ``get_matches`` accesses the matches for a particular position (on the
-     top sequence).
+     You can access all of the matches individually by using the iterator
+     interface: ::
+
+        ``for match in cmp: print match``
+
+     Also, ``get_matches`` accesses the matches for a particular
+     position (on the top sequence).
 
         Usage:
 
