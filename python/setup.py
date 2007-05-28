@@ -27,7 +27,7 @@ algorithms_mod = Extension("paircomp._paircomp_algorithms",
 # python modules
 package = 'paircomp'
 
-setup(name = "paircomp", version = "1.0",
+setup(name = "paircomp", version = "1.1",
       description = 'paircomp sequence comparison library',
       author = 'C. Titus Brown',
       author_email = 'titus@caltech.edu',
