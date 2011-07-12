@@ -2,6 +2,7 @@
 
 #define MAX_SEQUENCES 1000
 
+#include <stdio.h>
 #include <vector>
 #include <map>
 

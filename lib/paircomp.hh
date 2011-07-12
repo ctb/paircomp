@@ -24,6 +24,9 @@
 
 #define VERSION 1.1
 
+#include <stdio.h>
+#include <string.h>
+
 #include "Comparison.hh"
 #include "MutableComparison.hh"
 #include "ImmutableComparison.hh"

@@ -9,6 +9,7 @@
 #ifndef MATCH_HH		// guard against multiple inclusion
 #define MATCH_HH
 
+#include <stdio.h>
 #include <assert.h>
 
 /*!

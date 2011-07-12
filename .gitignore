@@ -4,3 +4,5 @@ simple_seqcomp.cmp
 CMakeFiles
 Makefile
 DartTestfile.txt
+*.pyc
+*.cmake

@@ -4,6 +4,8 @@
 #ifndef ALGORITHMS_HH
 #define ALGORITHMS_HH
 
+#include <algorithm>
+#include <stdio.h>
 #include <string>
 #include "MutableComparison.hh"
 #include "ImmutableComparison.hh"

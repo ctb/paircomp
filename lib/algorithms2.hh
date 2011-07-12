@@ -4,6 +4,7 @@
 /*!
 *   \file algorithms2.hh
 */
+#include <stdio.h>
 #include "algorithms.hh"
 
 /*!

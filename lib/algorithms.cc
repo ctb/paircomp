@@ -5,6 +5,7 @@
 *   \file algorithms.cc
 */
 #include <string>
+#include <string.h>
 #include <ctype.h>
 
 #include "algorithms.hh"

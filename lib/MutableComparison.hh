@@ -6,6 +6,7 @@
 #include <vector>
 #include <map>
 
+#include <stdio.h>
 #include "Match.hh"
 #include "Comparison.hh"
 
